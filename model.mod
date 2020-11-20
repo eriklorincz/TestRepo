@@ -15,7 +15,7 @@ set Cashiers := 1..cashierCount;
 var RowLength {Rows} >= 0;
 
 var PutProduct{ProductGroups, Rows} binary;
-var MaxLength >= 0;
+var BuildingLength >= 0;
 
 #Constraints
 s.t. PutExactlyInOneRow {p in ProductGroups}:
@@ -28,14 +28,14 @@ s.t. CashiersPlace{r in Rows : r <= cashierCount}:
 	cashierLength + sum{p in ProductGroups} PutProduct[p,r] * space[p] <= RowLength[r];
 
 s.t. MaximumRowLength{r in Rows}:
-	MaxLength >= RowLength[r];
+	BuildingLength >= RowLength[r];
 
 #Objective function
-minimize BuildLength: MaxLength;
+minimize BuildLength: BuildingLength;
 
 solve;
 
-printf "%f", MaxLength;
+printf "%f", BuildingLength;
 
 
 end;
